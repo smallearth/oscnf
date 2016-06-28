@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Simple php-fpm init script conceived to work on Unix
+# as it dose use of the /proc fileSystem
+
+PHPPORT=9000
+CONF=/etc/php-fpm.conf
+EXEC=php-fpm
+KILLPHP="ps aux | grep php | awk '{print $2}'|xargs kill -9"
+
+PIDFILE=/var/run/php-fpm_{$PHPPORT}
+
+case "$1" in
+    start)
+        if [ -f $PIDFILE ]
+            then
+                echo "$PIDFILE file exits, process already running or crashed!"
+            else
+                echo "Starting php-fpm server..."
+                $EXEC
+        fi
+        ;;
+
+    stop)
+        if[ ! f $PIDFILE ]
+            then
+                echo "$PIDFILE file exits, process already running or crashed!"
+            else
+                echo "Stoping php-fpm server"
+                $KILLPHP
+        fi
+        ;;
+        *)
+            echo "Please use start or stop as first argument~"
+        ;;
+esac
