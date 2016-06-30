@@ -1,0 +1,2 @@
+#按照出现次数倒叙排列
+awk '{for(i=1;i<=NF;i++)print $i}' file/test | sort | uniq -c | sort -rn
